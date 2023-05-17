@@ -1,0 +1,10 @@
+[book]
+authors = ["Shinwoo Kim"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Introduction to Systems Software"
+
+
+[output.html]
+mathjax-support = true

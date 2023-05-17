@@ -1,0 +1,2 @@
+# Data Representation
+To communicate with computers, we first need to work with its representation of data. In particular, most modern computer systems use a **binary** (base-2) numbering system to store all sorts of data. By encoding and interpreting a set of **bits** (which is either a 1 or a zero), computers can determine what that set of bits represent (data) or determine what to do (instructions).
