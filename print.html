@@ -1,0 +1,637 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introduction to Systems Software</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="datarep/datarep.html"><strong aria-hidden="true">2.</strong> Data Representation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="datarep/binary.html"><strong aria-hidden="true">2.1.</strong> Binary Number System</a></li><li class="chapter-item expanded "><a href="datarep/integer.html"><strong aria-hidden="true">2.2.</strong> Integers</a></li><li class="chapter-item expanded "><a href="datarep/floats.html"><strong aria-hidden="true">2.3.</strong> Floating Point Numbers</a></li></ol></li><li class="chapter-item expanded "><a href="cprog/cprog.html"><strong aria-hidden="true">3.</strong> The C Programming Language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cprog/syntax_i.html"><strong aria-hidden="true">3.1.</strong> The C Syntax Part I</a></li><li class="chapter-item expanded "><a href="cprog/hello_world.html"><strong aria-hidden="true">3.2.</strong> Hello, World! C Edition</a></li><li class="chapter-item expanded "><a href="cprog/syntax_ii.html"><strong aria-hidden="true">3.3.</strong> The C Syntax Part II</a></li></ol></li><li class="chapter-item expanded "><a href="memory/memory.html"><strong aria-hidden="true">4.</strong> Memory Management</a></li><li class="chapter-item expanded "><a href="x86asm.html"><strong aria-hidden="true">5.</strong> x86 Assembly</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="bufover.html"><strong aria-hidden="true">5.1.</strong> Buffer Overflow</a></li></ol></li><li class="chapter-item expanded "><a href="proc.html"><strong aria-hidden="true">6.</strong> Processes</a></li><li class="chapter-item expanded "><a href="virtmem.html"><strong aria-hidden="true">7.</strong> Virtual Memory</a></li><li class="chapter-item expanded "><a href="caching.html"><strong aria-hidden="true">8.</strong> Caching</a></li><li class="chapter-item expanded "><a href="threadsync.html"><strong aria-hidden="true">9.</strong> Threads & Synchronization</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to Systems Software</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="about"><a class="header" href="#about">About</a></h1>
+<p><a href="https://courses.sci.pitt.edu/courses/view/CS-449">CS 449</a>, titled <em>Introduction to Systems Software</em>, is the second course (of three sequential courses) in the University of Pittsburgh's Computer Science &quot;Systems&quot; curriculum. This course follows <a href="https://courses.sci.pitt.edu/courses/view/CS-447">CS 447</a> (Computer Organization and Assembly) which focuses on how the CPU works (using MIPS assembly). With a good understanding of how the CPU interacts with the software we write, this course shifts focus on to memory and how each process manages its address space. Once students have a solid foundation on how the hardware interacts with the software, the final course in the three course sequence, <a href="https://courses.sci.pitt.edu/courses/view/CS-1550">CS 1550</a> (Introduction to Operating Systems), looks at how various abstractions can help ease the user from worrying about the specific hardware details.</p>
+<h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>Most programs today are written using high-level programming languages (such as Java or Python) and many programs merely glue together existing components. However, the best craftsmen are those who understand their tools. For software builders, this means having a solid foundational knowledge of how a computer works internally. CS 449 aims to provide that knowledge by exploring how computers use memory to hold data and instructions, how high level languages abstract from the hardware (with the help of compilers), and how operating systems combine programs and libraries to create running code.</p>
+<h2 id="what-is-systems"><a class="header" href="#what-is-systems">What is Systems?</a></h2>
+<p>This course is titled <em>Introduction to Systems Software</em>, but what do we mean by a <em>Systems Software</em>?</p>
+<p><strong>Systems</strong> is a broad subfield of computer science that deals with the interaction of hardware and software. Typically, a programmer works on top of the layers of abstractions that hide away hardware details. For instance, when we want to display something to the monitor screen, we can use a function like <code>print</code> that is provided by a standard library instead of manipulating the monitor pixel-by-pixel. Similarly, if we were to write to a file, we can utilize the operating system's file system rather than moving the hard disk's write head and changing the magnetic poles manually. These abstractions are designed so that a programmer can focus on software design elements rather than working out the quirks and details of various computer hardware.</p>
+<p>However, when studying Systems, we will go beneath the layer of abstractions to explore how they are built/implemented. This will allow us to:</p>
+<ol>
+<li>Better understand how these abstractions work &amp; potentially improve on them</li>
+<li>Design our programs to take advantage of/avoid pitfalls of the hardware quirks</li>
+</ol>
+<p>and much more.</p>
+<h2 id="the-c-programming-language"><a class="header" href="#the-c-programming-language">The C Programming Language</a></h2>
+<p>One of the most useful tools that can help us understand the interaction of hardware and software will be the <strong>C programming language</strong>. We will use many programs that are written with C (which we can modify), but also use it to write and test our own programs.</p>
+<p>C is particularly useful because it provides high-level abstraction of assembly (with its syntax) while maintaining low-level access to memory (through pointers). This direct memory access is crucial for us as it is key to manipulating the CPU and other hardware. Since the CPU fetches instructions from RAM, by making changes to memory content, we are able to control and manipulate the CPU as well as other hardware devices.<sup class="footnote-reference"><a href="#von-neumann">1</a></sup></p>
+<p>Additionally, many common system-level programs are written in C (or C-like languages). For instance, most operating systems are written in C; and C itself, in fact, was created in 1972 with the purpose of being used in the Unix operating system.<sup class="footnote-reference"><a href="#linux">2</a></sup> As such, by learning to use C, we will learn to write and make modifications to the operating system which can further our understanding of how hardware abstractions work. With systems knowledge in one hand and C knowledge in the other, we will be able to ensure that our abstractions do not hurt performance and alleviate design fatigue.<sup class="footnote-reference"><a href="#abstraction">3</a></sup></p>
+<h2 id="why-learn-systems"><a class="header" href="#why-learn-systems">Why Learn Systems?</a></h2>
+<p>Even if you are not a computer (hardware) engineer, 
+Learning how programs interact with the underlying hardware is crucial for any software builder that wishes to write better software (regardless of if you are a '<em>hardware person</em>'). By the end of this courses, you will be able to:</p>
+<ul>
+<li>make optimizations to make your program more performant</li>
+<li>bypass the abstract interfaces to get the level of control or the performance you need</li>
+<li>fix bugs that come as a result of undefined behavior</li>
+<li>write/modify existing abstract layers such as operating systems or compilers</li>
+<li>debug higher-level programs (The Python interpreter is written in C!)</li>
+<li>and break things for the greater good (remove copy-protection or reverse-engineer programs)!</li>
+</ul>
+<hr />
+<p><sup class="footnote-reference"><a href="#von-neumann">1</a></sup> A computer with a CPU that fetches instructions from main memory is said to be of the <strong>Von Neumann Architecture</strong>.</p>
+<p><sup class="footnote-reference"><a href="#linux">2</a></sup> The Linux operating system (which is the most popular of the UNIX-like operating systems) and its device drivers are written mostly in C with over 10 million lines of code.</p>
+<p><sup class="footnote-reference"><a href="#abstraction">3</a></sup> Ensuring that abstractions are performant is a crucial task for any operating system developer. If an operating system's abstraction is slow, the performance of all application that run on that computer system will suffer.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="data-representation"><a class="header" href="#data-representation">Data Representation</a></h1>
+<p>There are more than 6000 different human languages in the world, each with its own standards and rules (namely grammar and vocabulary). As such, if we wanted to talk to another person, we would need to know the standards and rules of whatever language the other person speaks. For instance, to talk to a French person, you would need to know French or vice versa.</p>
+<p>Computers, similarly, have their own standards and rules when it comes to communicating. For code, there are hundreds of programming languages that are available; for data, there are thousands of different formats that a computer could use (such as <code>*.txt</code>, <code>*.ppt</code>, and more).</p>
+<pre><code class="language-mermaid">flowchart LR
+English --&gt; Human([Human])
+Human --&gt; Code/Data
+Code/Data --&gt; pc([Computer])
+pc --&gt; Binary
+</code></pre>
+<p>However, regardless of what format we use to provide code and data, the computer stores it onto disk/memory by using a special representation called the <strong>binary (base-2) numbering system</strong>. By encoding and interpreting a set of <strong>bits</strong> (which is either a 1 or a zero), a computer can determine what that set of bits represent (data) or determine what to do (instructions).</p>
+<hr />
+<p><sup class="footnote-reference"><a href="#num-lang">1</a></sup> <a href="https://www.linguisticsociety.org/content/how-many-languages-are-there-world">https://www.linguisticsociety.org/content/how-many-languages-are-there-world</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="binary-number-system"><a class="header" href="#binary-number-system">Binary Number System</a></h1>
+<p>A binary number system works just like the familiar base-10 number system (which uses the symbols 0 thru 9)  The numbers are written positionally (each position of a digit within the number has meaning) with the most significant digit being written on the left-most side.</p>
+<p>For instance, in a base-10 number system, a four digit number \( 2023 \) has the value: 
+\[ 2 \times 10^3 + 0 \times 10^2 + 2 \times 10^1 + 3 \times 10^0 \]</p>
+<p>The only difference in the base-2 number system is that the only allowable symbols are 0 and 1. With this requirement, each position of a digit now represents a power of 2. For instance, a four digit number \( 1011 \) has the value:
+\[1 \times 2^3 + 0 \times 2^2 + 1 \times 2^1 + 1 \times 2^0 \]</p>
+<h2 id="representable-numbers"><a class="header" href="#representable-numbers">Representable Numbers</a></h2>
+<p>Notice that, when we had four digits in the traditional base-10 number system, we could represent at most \(10^4 = 10000\) unique numbers. The smallest non-negative number would be \[0000 = 0 \times 10^3 + 0 \times 10^2 + 0 \times 10^1 + 0 \times 10^0 =0 \] and the largest representable number is \[ 9999 = 9 \times 10^3 + 9 \times 10^2 + 9 \times 10^1 + 9 \times 10^0 = 10^4 -1 \]</p>
+<p>However, with the binary number system, we can represent at most \(2^4 = 16_{10}\) unique numbers with the smallest non-negative representable number being \[0000 = 0 \times 2^3 + 0 \times 2^2 + 0 \times 2^1 + 0 \times 2^0 =0 \] and the largest representable number being \[1111= 1 \times 2^3 + 1 \times 2^2 + 1 \times 2^1 + 1 \times 2^0 = 2^4 -1 = 15_{10} \]</p>
+<p>Generalizing, a \( n \) digit binary number \(d_{n-1} \ldots d_1 d_0 \) has the value: 
+\[d_{n-1} \times 2^{n-1} + \cdots + d_1 \times 2^1 + d_0 \times 2^0 \]
+Furthermore, with \( n \) binary digits (bits), we can represent \(2^n -1 \) unique digits where the smallest non-negative representable number is \(0 \) and the largest representable number is \(2^n -1\).</p>
+<div class="table-wrapper"><table><thead><tr><th>Min</th><th>Max</th></tr></thead><tbody>
+<tr><td>\(0\)</td><td>\(2^n-1\)</td></tr>
+</tbody></table>
+</div>
+<h2 id="base-16-number-system"><a class="header" href="#base-16-number-system">Base-16 Number System</a></h2>
+<p>Because we can only use two symbols in the base-2 numbering system, our <em>bit sequences</em> can easily become too long to write by hand. Hence, we often use a shorthanded base-16 (also called <strong>hexadecimal</strong>) notation to condense the representation of bits. In this shorthand, we use 16 symbols \( \{1 \ldots 9, A, B, C, D, E, F \} \) where \(0 \) through \(9 \) represent their base-10 counterparts and \(A \) through \(F \) represent 10 through 15.</p>
+<p>Notably, this shorthand is very easy to convert to binary and vice versa. All we have to do is, block groups of 4 bits and convert each block to a corresponding hex digit. For example, we can do the following conversion in both directions:
+<img src="datarep/./bin-to-hex.svg" alt="Binary to Hexadecimal" />
+Here, the line at the top (<code>0xFACE</code>) is the hexadecimal representation and the line at the bottom (<code>0b1111 1010 1100 1110</code>) is the binary representation.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="integer-encoding"><a class="header" href="#integer-encoding">Integer Encoding</a></h1>
+<p>A computer stores information as a stream of bits (e.g., <code>0xe29884</code>). But what do those bits actually mean? For that, we need to assign an <strong>interpretation</strong> to the bit stream.</p>
+<h2 id="unsigned-numbers"><a class="header" href="#unsigned-numbers">Unsigned Numbers</a></h2>
+<p>One possible interpretation of a stream of bits is as an unsigned number. This is the most simple interpretation of a bit stream, and we read the number (represented in hexadecimal )as follows:</p>
+<p>\[\begin{equation}
+\begin{split}
+\verb|0xe29884| &amp; = \verb|e| \times 16^5 + 2 \times 16^4 + 9 \times 16^3 + 8 \times 16^2 + 8 \times 16^1 + 4 \times16^0 \\
+&amp; = 14 \times 16^5 + 2 \times 16^4 + 9 \times 16^3 + 8 \times 16^2 + 8 \times 16^ 1 + 4 \times 16^0 \\
+&amp; = 14680064 + 131072 + 36864 + 2048 + 128 + 4 \\
+&amp; = 14850180
+\end{split}
+\end{equation}\]</p>
+<p>Similarly, if we want to convert a binary number (e.g., <code>0b1101</code>) to a decimal number, we’d apply the same process using powers of 2 instead of 16:</p>
+<p>\[\begin{equation}
+\begin{split}
+\verb|0b1101|   &amp; = 1 \times 2^3 + 1 \times 2^2 + 0 \times 2^1 + 1 \times 2^0 \\
+&amp; = 2^3 + 2^2 0 + 2^0 \\
+&amp; = 8 + 4 + 0 + 1 \\
+&amp; = 13
+\end{split}
+\end{equation}\]</p>
+<h2 id="signed-numbers"><a class="header" href="#signed-numbers">Signed Numbers</a></h2>
+<p>Another possible interpretation of a hex digit is as an signed number. One of the most common way of representing signed numbers using ones and zeros is called <strong>two's complement</strong>. In two's complement, the most significant bit (MSb) denotes the sign of a number. For instance, given a 3-bit number:</p>
+<div class="table-wrapper"><table><thead><tr><th>Binary Representation</th><th>Value</th></tr></thead><tbody>
+<tr><td><code>100</code></td><td>-4</td></tr>
+<tr><td><code>101</code></td><td>-3</td></tr>
+<tr><td><code>110</code></td><td>-2</td></tr>
+<tr><td><code>111</code></td><td>-1</td></tr>
+<tr><td><code>000</code></td><td>0</td></tr>
+<tr><td><code>001</code></td><td>1</td></tr>
+<tr><td><code>010</code></td><td>2</td></tr>
+<tr><td><code>011</code></td><td>3</td></tr>
+</tbody></table>
+</div>
+<p>we can see that numbers with a 1 in the left-most bit is negative, whereas numbers with a 0 in the left-most bit are positive. We can also see that there is one additional negative number than the positives. That is, \(-4\) does not have a positive counterpart. Two's complement is achieved by:</p>
+<ol>
+<li>Starting with the equivalent positive number.</li>
+<li>Inverting (or flip) all bits – changing every 0 to 1, and every 1 to 0;</li>
+<li>Adding 1 to the entire inverted number, ignoring any overflow</li>
+</ol>
+<p>For example, to write \(-3 \) using 4 bits:</p>
+<ol>
+<li>We first write the bit pattern for positive \(3 \implies \verb|0b0010|\).</li>
+<li>We then flips all the bits \( \verb|0b0010| \implies \verb|0b1100|\).</li>
+<li>Finally, we add 1 to get \( \verb|0b1100| + 1 \implies \verb|0b1101|\).</li>
+</ol>
+<p>Notice that if we apply the same process for the bit pattern of \( -3 \), we get \(\verb|0b1101| \implies \verb|0b0010| \implies \verb|0b0011| \) which is the bit pattern for positive \( 3\). That is, by applying the process above, we can negate any number in two's complement. Formally, this process can be written as:</p>
+<p>\[\begin{equation}
+\text{Encode}(x)
+\begin{cases} 
+x &amp; x\geq 0 \\
+x + 2^n &amp; x &lt; 0 
+\end{cases} \\
+\text{Decode}(x)
+\begin{cases} 
+x &amp; x &lt; 2 ^{n-1} \\
+x - 2^n &amp; x \geq 2 ^{n-1} 
+\end{cases}
+\end{equation}\]</p>
+<p>Two's complement is useful since arithmetic can be done on numbers of either sign without having to do anything special.</p>
+<h3 id="integer-ranges"><a class="header" href="#integer-ranges">Integer Ranges</a></h3>
+<p>We saw that for \(n \)-bit unsigned numbers, the range of representable integers were \(0\) to \(2^n-1\). However, if we are using two's complement signed numbers, the range of representable integers become \(-2^{n-1}\) to \(2^{n-1} -1\) (since there is one more negative number than there are positive numbers). This also means that there is no positive counterpart to \(-2^{n-1}\). In fact, if we attempt to negate this number, we get:
+\[
+-(-2^{n-1})=-(\verb|0b100|\ldots\verb|0|)=\verb|0b011|\ldots\verb|1|+1=\verb|0b100|\ldots\verb|0| = -2^{n-1}
+\]</p>
+<h3 id="overflow"><a class="header" href="#overflow">Overflow</a></h3>
+<p>We know that for \(n \)-bit signed numbers, the largest representable integer is \(2^{n-1}-1\). But, what happens when we try to add \(1\) to this number?</p>
+<p>Consider \(\verb|0b0111| \), a 4-bit signed number, whose value is 7. If we try adding 1 to this number, we get:
+\[
+7+1=\verb|0b0111| + 1 = \verb|0b1000|=-8
+\] 
+This is an example of an <strong>integer overflow</strong> which occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of digits. Integer overflows can occur in either direction:</p>
+<ul>
+<li>When an addition produces a value that is higher than the maximum representable value.</li>
+<li>When a subtraction produces a value that is lower than the minimum representable value.</li>
+</ul>
+<p>Integer overflows are a common source of <em>undefined behavior</em> and can often lead to bugs in programs. Hence, detecting overflow is a crucial task for programmers.</p>
+<p>An overflow occurs when the value affects the sign:</p>
+<ul>
+<li>If adding two positive numbers yields a negative result, an overflow occurred.</li>
+<li>If subtracting two negative number yields a positive result, an overflow occurred.</li>
+<li>If subtracting a negative number from a positive number yields a negative result, an overflow occurred.</li>
+<li>If subtracting a positive number from a negative number yields a positive result, an overflow occurred.</li>
+<li>An overflow cannot occur when subtracting two numbers of the same sign.</li>
+<li>An overflow cannot occur when adding two numbers of opposing signs.</li>
+</ul>
+<h2 id="integers-in-c"><a class="header" href="#integers-in-c">Integers in C</a></h2>
+<p>In Java, integers were signed variables which used the two's complement interpretation. This meant that variables could hold values from \(-2^{n-1} \) to \(2^{n-1} -1\) where \(n\) is given by the variable type.</p>
+<div class="table-wrapper"><table><thead><tr><th>Integer Types</th><th>size</th></tr></thead><tbody>
+<tr><td>byte</td><td>8 bits</td></tr>
+<tr><td>short</td><td>16 bits</td></tr>
+<tr><td>int</td><td>32 bits</td></tr>
+<tr><td>long</td><td>64 bits</td></tr>
+</tbody></table>
+</div>
+<p>In C, variables can be declared as either signed or unsigned. This means that any variable declared as unsigned can hold values from \(0\) to \(2^n -1\) and variables declared as signed can hold values from \(-2^{n-1}\) to \(2^{n -1}-1\).<sup class="footnote-reference"><a href="#c-tc">1</a></sup></p>
+<p>The \(n\), like in Java, is given by the variable type. A typical 64-bit machine will have variable sizes as such:</p>
+<div class="table-wrapper"><table><thead><tr><th>Integer Types</th><th>size</th></tr></thead><tbody>
+<tr><td>char</td><td>8 bits</td></tr>
+<tr><td>short int</td><td>16 bits</td></tr>
+<tr><td>int</td><td>32 bits</td></tr>
+<tr><td>long     int</td><td>64 bits</td></tr>
+</tbody></table>
+</div>
+<p>However, these sizes are <em>architecture-dependent</em> and can vary from machine to machine. As such, the <a href="https://pubs.opengroup.org/onlinepubs/009695399/basedefs/limits.h.html">C standard library</a> provides constants which can help define the ranges of each variables.</p>
+<pre><code class="language-c">#include &lt;limits.h&gt; // for INT_MAX, UNIT_MAX
+#include &lt;stdio.h&gt;  // for printf()
+int main()
+{
+  printf(&quot;%d&quot;, INT_MAX); // prints 2147483647
+  printf(&quot;%d&quot;, UINT_MAX); // prints 4294967295
+  return 0;
+}
+</code></pre>
+<p>Additionally, the <code>sizeof</code> operator (built in to C) allows us the ability to programmatically obtain the byte size of data.</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;  // for printf()
+int main()
+{
+  printf(&quot;%d&quot;, sizeof(int));       // prints 4 (= 32b) on a typical 64-bit machine
+  long long_var = 0;
+  printf(&quot;%d&quot;, sizeof(long_var));  // prints 8 (= 64b) on a typical 64-bit machine
+  return 0;
+}
+</code></pre>
+<h3 id="integer-casting"><a class="header" href="#integer-casting">Integer Casting</a></h3>
+<p>In C, like in many other programming languages, we can cast<sup class="footnote-reference"><a href="#cast">2</a></sup> variables to another type. In addition, C lets us move a value from an unsigned integer variable to a signed integer variable (and vice versa).</p>
+<pre><code class="language-c">int sx, sy;
+unsigned ux, uy;
+sx = (int) ux;
+uy = (unsigned) sy;
+</code></pre>
+<p>When we cast a variable from signed to unsigned (or unsigned to signed), the underlying bit pattern is not changed, but the interpretation of the bit pattern is. This becomes troublesome when a cast results in a interpretation that is not valid. Even if the resulting interpretation is invalid, your program will still cast anyway. This is called <strong>coercion</strong>.</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+int main()
+{
+    int i = -1;
+    unsigned u = (unsigned) i;
+    printf(&quot;i=%d, u=%u\n&quot;, i, u);
+    return 0;
+} // Output: i=-1, u=4294967295
+</code></pre>
+<p>Since C ignore the obvious invalid operations this is sometimes referred to as &quot;weak&quot; typing.<sup class="footnote-reference"><a href="#weak-typing">3</a></sup></p>
+<p>In addition to the explicit casts (like the one above), we can also <em>implicitly</em> cast between variables through assignments and procedure calls:</p>
+<pre><code class="language-c">sx = ux;
+uy= sy;
+int (fun unsigned u);
+uy = fun(sx);
+</code></pre>
+<p>By default, integer literals (constants) are considered to be <em>signed integers</em>. If we were to explicitly force them to be unsigned, we can suffix a &quot;<code>U</code>&quot; or &quot;<code>u</code>&quot; to the literal like: <code>0U</code>, <code>4294967259u</code>.</p>
+<p>Lastly, when we mix an unsigned and signed variable in a single expression (including comparison operators), signed values are implicitly cast to unsigned values.</p>
+<hr />
+<p><sup class="footnote-reference"><a href="#c-tc">1</a></sup> Two's complement is not strictly mandated by the C language. However, most machines use it to store and represent signed integers.</p>
+<p><sup class="footnote-reference"><a href="#cast">2</a></sup> Moving values between different type is called <strong>casting</strong>.</p>
+<p><sup class="footnote-reference"><a href="#weak-typing">3</a></sup> The strong/weak terminology has had very fragile definitions over the years and are arguably useless in our context. Hence, we will ignore them.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="floating-point-numbers"><a class="header" href="#floating-point-numbers">Floating Point Numbers</a></h1>
+<p>C Guarantees Two Levels
+• float single precision
+• double double precision
+• Conversions/Casting
+• Casting between int, float, and double changes bit representation
+• double/float → int
+• Truncates fractional part
+• Like rounding toward zero
+• Not defined when out of range or NaN: Generally sets to TMin
+• int → double
+• Exact conversion, as long as int has ≤ 53 bit word size
+• int → float
+• Will round according to rounding mode
+• Systems don’t usually use floats! :whew:
+• Floats also suffer from the fixed number of bits available to represent
+them
+• Can get overflow/underflow
+• “Gaps” produced in representable numbers means we can lose precision, unlike
+ints
+• Some “simple fractions” have no exact representation (e.g. 0.2)
+• “Every operation gets a slightly wrong result”
+• Floating point arithmetic not associative or distributive
+• Mathematically equivalent ways of writing an expression may compute different
+results
+• Never test floating point values for exact equality!
+• Careful when converting between ints and floats</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-c-programming-language-1"><a class="header" href="#the-c-programming-language-1">The C Programming Language</a></h1>
+<blockquote>
+<p>C is not a “very high-level” language, nor a “big” one, and is not specialized to any particular area of application. But its absence of restrictions and its generality make it more convenient and effective for many tasks than supposedly more powerful languages.</p>
+<p>— <em>Kernighan &amp; Ritchie</em></p>
+</blockquote>
+<h2 id="compiling-c-programs"><a class="header" href="#compiling-c-programs">Compiling C Programs</a></h2>
+<p>Unlike Java (which uses the Java Virtual Machine) and Python (which uses an interpreter), C is a <strong>compiled language</strong>. C source code is generally converted into machine code which can run directly on the CPU. The difference is in a trade-off about when and how to create a machine-level representation of the source code.</p>
+<p>Generally, a C compiler will typically convert a <code>*.c</code> source file into an intermediate <code>*.o</code> object file. Then, a linker will <em>link</em> these together to form an actually executable.</p>
+<pre><code class="language-mermaid">flowchart LR
+    code([Source Code]) --&gt; Compiler
+    Compiler --&gt; asm([Assembly Code])
+    asm --&gt; Assembler
+    Assembler --&gt; m([Machine Code])
+    m --&gt; Linker
+    Linker --&gt; exe([Executable])
+</code></pre>
+<p>Later, we will look at each of the phases to compiling a C program. For now, we can consider the compiler as a program that simply takes the C source code and translates it into a machine-code executable.</p>
+<h2 id="compilation-vs-interpretation"><a class="header" href="#compilation-vs-interpretation">Compilation vs Interpretation</a></h2>
+<p>In a compiled language, like C, the source code is translated prior to run-time (during compilation) into a format that can be executed directly on the hardware. This, alongside various compiler optimization techniques, mean that compiled languages can run very fast. However, since each program needs to be translated to its respective architecture's machine code, to move a program from one machine to another, may require recompilation of the source code.</p>
+<p>In an interpreted language, like Python, the source code is executed as it is read by a interpreter program (which is often written in some other language) and translated into machine code line-by-line. Because of this, interpreted languages do not rely on the hardware as long as the appropriate interpreter is installed on the target system. However, since the source code needs to be translated at run-time, interpreted languages are often much slower than compiled languages.</p>
+<p>Another approach for languages is to use both an interpreter and a compiler.Java can be considered both a compiled and an interpreted language because its source code is first compiled into a binary byte-code. Byte code is a pseudo-architecture in that there are no real hardware that can run byte code. Instead, a type of virtual machine (like the Java Virtual Machine) simulates the byte-code architecture and the byte-code is translated into machine code periodically. This is a type of delayed compilation called Just-In-Time compilation. Just-In-Time compilation is a compromise to both approaches (compiler/interpreter) and it is surprisingly competitive in its execution speed.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-c-syntax-part-i"><a class="header" href="#the-c-syntax-part-i">The C Syntax (Part I)</a></h1>
+<h2 id="c-dialects"><a class="header" href="#c-dialects">C Dialects</a></h2>
+<p>C is a very old language. Because of this, there are a lot of different styles of C in the world. Luckily, throughout the many standard revisions, the syntax has changed very little. However, newer C standards (or versions) support additional features. As such, we can declare the C version explicitly when we compile using the <code>-std</code> flag like: </p>
+<pre><code class="language-sh"># For C versions later than C99
+gcc -std=c99 source.c
+# For C389 (ANSI/ISO C)
+gcc -ansi -–Wpedantic source.c
+</code></pre>
+<p>The main versions of C are:</p>
+<ul>
+<li>C89 (ANSI/ISO C) which is the original C standard</li>
+<li>C99 (released 1999) which adds 'complex' numbers and single-line comments</li>
+<li>C11 (released 2011) which standardizes Unicode and supports newer threading libraries (for better parallelism)</li>
+<li>C18 (released 2018) which makes minor refinements to C11</li>
+</ul>
+<p>For us, we will more or less focus on the C99 standard in this course.</p>
+<h2 id="learning-c-as-a-java-programmer"><a class="header" href="#learning-c-as-a-java-programmer">Learning C as a Java Programmer</a></h2>
+<p>Unlike Java which is a <em>Object-Oriented language</em>, C is a <strong>procedural language</strong>. This means that C code specifies a series of well-structured steps and procedure instead of <em>encapsulating</em> functions and data into classes (or abstract data types). Consequently, the basic programming unit in C is a <strong>function</strong>.</p>
+<p>Additionally, as we have discussed before, compilation of C program requires a compiler (like gcc) which can translate the source code into machine language code. In contrast, Java code uses a compiler (javac) that translates source code into Java virtual machine language bytecode. </p>
+<pre><code class="language-sh"># Compiling a C program using gcc
+gcc source.c
+
+# Compiling a Java program using javac
+javac source.c
+</code></pre>
+<p>As such, Java programs require a bytecode interpreter whereas C programs can be loaded directly on the underlying hardware</p>
+<pre><code class="language-sh"># Execute a compiled C executable
+./a.out
+
+# Execute a compiled Java executable
+java prog
+</code></pre>
+<p>One of the more interesting feature of C is its capacity to directly access memory. In Java, memory management is done automatically with memory being allocated with the <code>new</code> keyword and the garbage collector automatically freeing memory when the object loses its reference. In C, however, memory allocation must be done manually using the <code>malloc()</code> function and freed using the <code>free()</code> function.</p>
+<p>Syntax wise, C supports the same single line comments (<code>//...</code>) and multi-line comments (<code>/* ... */</code>) just like in Java. Constants, on the other hand, can be defined using the <code>#define</code> macro or the <code>const</code> keyword. In comparison, Java uses the <code>final</code> keyword. The macros (defined using <code>#define</code>) are filled in using text-replacement by the <strong>preprocessor</strong> prior to compilation. In Java, there is no equivalent preprocessor.</p>
+<p>Furthermore, like in Java, variables need to be declared before being used. However, in older versions of C (mainly those before C99), variables need to be declared at the top of the file. In fact, it is still common practice to declare variable and function names at the top of the file. When declaring variables, the common convention is to use <code>snake_case</code>.<sup class="footnote-reference"><a href="#java-case">1</a></sup></p>
+<p>Lastly, to access an external library, we can use the <code>#include</code> preprocessor directive with the appropriate header file like:</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+</code></pre>
+<p>Header files are simply text files which contain the names of the functions in the external library. The angle brackets (<code>&lt; &gt;</code>) tell the preprocessor to look for the file in the location of the system's standard library. If instead, we were using a custom (non-standard) library, we would need to use quotation marks and explicitly state the path to the header file like:</p>
+<pre><code class="language-c">#include &quot;path/to/header.h&quot;
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th></th><th>C</th><th>Java</th></tr></thead><tbody>
+<tr><td>Language Type</td><td>Procedural</td><td>Object Oriented</td></tr>
+<tr><td>Programming Unit</td><td>Functions</td><td>Classes (Abstract Data Types)</td></tr>
+<tr><td>Compilation</td><td><code>gcc source.c</code> creates a machine language code</td><td><code>javac source.java</code> creates a Java virtual machine language bytecode</td></tr>
+<tr><td>Execution</td><td><code>./a.out</code> loads and executes the program</td><td><code>java prog</code> runs the JVM which interprets the bytecode</td></tr>
+<tr><td>Memory Management</td><td>Manual using <code>malloc()</code> and <code>free()</code></td><td>Automatic using the <code>new</code> keyword and the garbage collector</td></tr>
+<tr><td>Comments</td><td><code>// single line comments</code> and <code>/* multi-line comments */</code></td><td><code>// single line comments</code> and <code>/* multi-line comments */</code></td></tr>
+<tr><td>Variable Declaration</td><td>Before using it (additional restrictions with older versions of C)</td><td>Before using it</td></tr>
+<tr><td>Variable Naming Conventions</td><td><code>snake_case</code></td><td><code>camelCase</code></td></tr>
+<tr><td>Accessing a Library</td><td><code>#include &lt;stdio.h&gt;</code></td><td><code>import java.io.File;</code></td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="hello-world-c-edition"><a class="header" href="#hello-world-c-edition">Hello, World! C Edition</a></h1>
+<p>It’s traditional when learning a new language to write a little program that prints the text <code>Hello, world!</code> to the screen, so we’ll do the same here.</p>
+<blockquote>
+<p>Because C maintains a low-level access to hardware, some of its details (like the size of an <code>int</code>) is hardware dependent. For this course, we will be using a 64-bit machine running the latest version of Linux to run, compile, and test all code. For compilation, we will use <code>gcc</code> or the GNU compiler collection.</p>
+</blockquote>
+<p>We'll start by making a new source file called <code>hello.c</code> (C source files end with the <em>.c</em> extension). Now, open the <em>hello.c</em> and enter the code below:</p>
+<pre><code class="language-c">// File includes must states at the top of the file
+#include &lt;stdio.h&gt;
+int main(void)
+{
+    printf(&quot;Hello, World!\n&quot;);
+    return 0;
+}
+</code></pre>
+<p>Save the file and open the terminal in the working directory. On the terminal, enter the following commands to compile and run the file:</p>
+<pre><code class="language-sh">$ gcc -Wall hello.c -o hello
+$ ./hello
+Hello, World!
+</code></pre>
+<h2 id="anatomy-of-a-c-program"><a class="header" href="#anatomy-of-a-c-program">Anatomy of a C Program</a></h2>
+<p>Let's now dissect the code we've written. Here's the first piece of the puzzle:</p>
+<pre><code class="language-c">int main(void){
+
+}
+</code></pre>
+<p>These lines define a function named <code>main</code>. The <code>main</code> function is special: it is always the first code that runs in every C program. Here, the first line declares a function named <code>main</code> that has no parameters and returns an <code>int</code>. If there were parameters, they would go inside the parentheses <code>()</code>. The <code>int</code> return value indicates whether a function executed successfully. T</p>
+<p>Next, the function body is wrapped in <code>{}</code> and holds the following code:</p>
+<pre><code class="language-c">println(&quot;Hello, world! \n&quot;);
+</code></pre>
+<p>This line does all the work in this little program: it prints text to the screen. The rules for the string argument is similar to Java. For instance, the <code>\n</code> denotes a newline and <code>\t</code> denotes a tab.</p>
+<h3 id="using-external-libraries"><a class="header" href="#using-external-libraries">Using External Libraries</a></h3>
+<p>Notice however, that we are calling the <code>printf</code> function without every declaring it in our program. This is because the <code>printf</code> function is part of the C standard library. We can use functions that are defined elsewhere as long as we inform the compiler as such.</p>
+<p>The very first line in our program has the <code>#include</code> statement.</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+</code></pre>
+<p>This line tells the C preprocessor to copy over the contents of the <em>stdio.h</em> file into the <em>hello.c</em> source file (essentially performing a text-replacement). Now, 
+if we move into into the directory where the standard library is installed and examine the <em>stdio.h</em> file, we will find the declaration for the <code>printf</code> function which looks something like:</p>
+<pre><code class="language-c">int printf(const char* format, ...);
+</code></pre>
+<p>There are <strong>n</strong> important details to notice here:</p>
+<p>First, the <em>stdio.h</em> header file does not contain the implementation for the <code>printf</code> function; only the function signature is given. The actual code (implementation) for <code>printf()</code> is defined elsewhere and is <em>linked</em> when our source code goes through the compiler. We will learn what <em>linking</em> means later in the course. The function signature is here only to tell the compiler that a function which matches this signature does in fact exists. This is a crucial line because in C, everything (including functions) must be declared before being used.</p>
+<p>Second, the function signature indicates that the <code>printf</code> function returns an <code>int</code>. It is common practice to return an integer value to indicate whether a function has succeeded. Typically, a return value of zero is considered to be &quot;successful&quot;.</p>
+<p>Third, the function signature indicates that <code>printf</code> accepts a memory address of an &quot;array of <code>const char</code>s&quot; and a variable number of additional arguments (indicated by the <code>...</code>). The character array is equivalent to a string in C and the optional additional arguments are used to pass in values that can replace the placeholder (like <code>%d</code>) in the string.</p>
+<p>Fourth, we end the line with a semicolon (;), which indicates that this expression is over and the next one is ready to begin. Most lines of C code end with a semicolon.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-c-syntax-part-ii"><a class="header" href="#the-c-syntax-part-ii">The C Syntax (Part II)</a></h1>
+<p>Now that we've made our first C program, let's discuss some other common features of C.</p>
+<h2 id="declaring-variables--integers--casting-revisited"><a class="header" href="#declaring-variables--integers--casting-revisited">Declaring Variables + Integers &amp; Casting (Revisited)</a></h2>
+<p>Just like in Java, variables are declared within functions (generally towards the top of the file/function). The type is followed by the name like</p>
+<pre><code class="language-c">int n;
+</code></pre>
+<p>and we can initialize them using <code>=</code></p>
+<pre><code class="language-c">n = 5;
+int n = 5;  // Declare and initialize in one line!
+</code></pre>
+<p>However, unlike Java, when variables are not initialized, their values are considered arbitrary. Technically, the variables are assigned a memory address when they are declared; Before initializing the variable, if we try to read it, they will yield whatever value happens to be at that memory address (no matter how non-sensical it is).</p>
+<p>Furthermore, as we have discussed before, we can cast variables (both explicitly and implicitly). For instance, we can implicitly cast values when we initialize the variable like</p>
+<pre><code class="language-c">int n = -50000;
+</code></pre>
+<p>Here, the literal <code>-50000</code> is coerced into an <code>int</code> type. In fact, we can coerce the values like this no matter how much nonsense it might be:</p>
+<pre><code class="language-c">char smaller = n;
+</code></pre>
+<p>Additionally, we can explicitly cast the value as well:</p>
+<pre><code class="language-c">unsigned int non_sense = (unsigned int) n;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="memory-management"><a class="header" href="#memory-management">Memory Management</a></h1>
+<p>There are two components that are core to any modern computer system: (1) CPU and (2) Memory. The central processing unit (CPU, or processor) is the hardware inside the computer that actually executes program instructions using data. Memory (RAM, or Random Access Memory) is the piece(es) of hardware that store the program that stores the program instructions and data. </p>
+<p>We can look at memory as a continuous series of bits that are logically blocked into chunks. These chunks are often byte-sized (8 bits) or word-sized depending on the hardware architecture. However, we will focus on the byte-sized (or <strong>byte-addressable</strong>) memory. In this scheme, individual bytes in memory can be accessed with a unique <strong>address</strong>. These addresses index the memory (the first byte would have address <code>0x00000000</code>, the next byte <code>0x00000001</code>, and so on) which makes it easy to read arbitrary parts of memory easily (hence the <em>random-access</em>).</p>
+<p>In a byte-addressable scheme, the minimal unit of memory is a byte. Hence, if we wanted to read 4 bits from memory, we would have to get the address of the  corresponding byte (that contains those 4 bits), read the memory, and use masking and shifting to isolate the bits.</p>
+<h2 id="the-c-memory-model"><a class="header" href="#the-c-memory-model">The C Memory Model</a></h2>
+<p>In a C program, the two main parts of program is <strong>code</strong> (also called <em>text</em>) and <strong>data</strong>. Effective memory management is to figure out how to lay these two components onto memory.</p>
+<p>Let's look at an example program:</p>
+<pre><code class="language-c">int my_static_var = 1;
+int factorial(int n)
+{
+    if (n &lt;= 1) return my_static_var;
+    return n * factorial(n - 1);
+}
+void main(void)
+{
+    factorial(5);
+}
+</code></pre>
+<p><img src="memory/address_space.svg" alt="Alt text" />
+The two lines that are inside the <code>factorial</code> function and the line that is inside the <code>main</code> function are the code.</p>
+<pre><code class="language-c">// from factorial(int n)
+if (n &lt;= 1) return my_static_var;
+return n * factorial(n - 1);
+
+// from main(void)
+factorial(5);
+</code></pre>
+<p>The code has a few known properties:</p>
+<ol>
+<li>The code is not likely to change during run-time. <sup class="footnote-reference"><a href="#von-neumann-change">1</a></sup></li>
+<li>The code must be loaded into RAM before a program can begin to execute.</li>
+</ol>
+<p>The very first line of our program is called <strong>static data</strong>.</p>
+<pre><code class="language-c">int my_static_var = 1;
+</code></pre>
+<p>Static data is often overlooked, but very useful component of data. Static data (or static variables) lives outside of any function in our program, and can be accessed by any of them. Static data also has some properties which are:</p>
+<ol>
+<li>Contrary to its name, it can change</li>
+<li>The variable's size is fixed</li>
+<li>Static data must be loaded into RAM before a program can begin to execute.</li>
+</ol>
+<p>Lastly, the <strong>stack</strong> is a space for temporary dynamic data. The stack holds temporary variables and function arguments like:</p>
+<pre><code class="language-c">/*int factorial(*/ int n //)
+/*factorial(*/ n - 1 //);
+</code></pre>
+<p>Space for these variables are allocated when a function is called and they are freed (or popped) when a function returns. As more functions are called, the stack grows downward (and lower addresses are allocated); as functions return, the stack reduces back upwards. <sup class="footnote-reference"><a href="#recursion">2</a></sup></p>
+<p>Heap</p>
+<hr />
+<p><sup class="footnote-reference"><a href="#von-neumann-change">1</a></sup> umm actually no.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="x86-assembly"><a class="header" href="#x86-assembly">x86 Assembly</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="buffer-overflow"><a class="header" href="#buffer-overflow">Buffer Overflow</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="processes"><a class="header" href="#processes">Processes</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="virtual-memory"><a class="header" href="#virtual-memory">Virtual Memory</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="caching"><a class="header" href="#caching">Caching</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="threads--synchronization"><a class="header" href="#threads--synchronization">Threads &amp; Synchronization</a></h1>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

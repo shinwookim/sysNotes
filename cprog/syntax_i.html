@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The C Syntax Part I - Introduction to Systems Software</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../datarep/datarep.html"><strong aria-hidden="true">2.</strong> Data Representation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datarep/binary.html"><strong aria-hidden="true">2.1.</strong> Binary Number System</a></li><li class="chapter-item expanded "><a href="../datarep/integer.html"><strong aria-hidden="true">2.2.</strong> Integers</a></li><li class="chapter-item expanded "><a href="../datarep/floats.html"><strong aria-hidden="true">2.3.</strong> Floating Point Numbers</a></li></ol></li><li class="chapter-item expanded "><a href="../cprog/cprog.html"><strong aria-hidden="true">3.</strong> The C Programming Language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cprog/syntax_i.html" class="active"><strong aria-hidden="true">3.1.</strong> The C Syntax Part I</a></li><li class="chapter-item expanded "><a href="../cprog/hello_world.html"><strong aria-hidden="true">3.2.</strong> Hello, World! C Edition</a></li><li class="chapter-item expanded "><a href="../cprog/syntax_ii.html"><strong aria-hidden="true">3.3.</strong> The C Syntax Part II</a></li></ol></li><li class="chapter-item expanded "><a href="../memory/memory.html"><strong aria-hidden="true">4.</strong> Memory Management</a></li><li class="chapter-item expanded "><a href="../x86asm.html"><strong aria-hidden="true">5.</strong> x86 Assembly</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../bufover.html"><strong aria-hidden="true">5.1.</strong> Buffer Overflow</a></li></ol></li><li class="chapter-item expanded "><a href="../proc.html"><strong aria-hidden="true">6.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../virtmem.html"><strong aria-hidden="true">7.</strong> Virtual Memory</a></li><li class="chapter-item expanded "><a href="../caching.html"><strong aria-hidden="true">8.</strong> Caching</a></li><li class="chapter-item expanded "><a href="../threadsync.html"><strong aria-hidden="true">9.</strong> Threads & Synchronization</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Introduction to Systems Software</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="the-c-syntax-part-i"><a class="header" href="#the-c-syntax-part-i">The C Syntax (Part I)</a></h1>
+<h2 id="c-dialects"><a class="header" href="#c-dialects">C Dialects</a></h2>
+<p>C is a very old language. Because of this, there are a lot of different styles of C in the world. Luckily, throughout the many standard revisions, the syntax has changed very little. However, newer C standards (or versions) support additional features. As such, we can declare the C version explicitly when we compile using the <code>-std</code> flag like: </p>
+<pre><code class="language-sh"># For C versions later than C99
+gcc -std=c99 source.c
+# For C389 (ANSI/ISO C)
+gcc -ansi -–Wpedantic source.c
+</code></pre>
+<p>The main versions of C are:</p>
+<ul>
+<li>C89 (ANSI/ISO C) which is the original C standard</li>
+<li>C99 (released 1999) which adds 'complex' numbers and single-line comments</li>
+<li>C11 (released 2011) which standardizes Unicode and supports newer threading libraries (for better parallelism)</li>
+<li>C18 (released 2018) which makes minor refinements to C11</li>
+</ul>
+<p>For us, we will more or less focus on the C99 standard in this course.</p>
+<h2 id="learning-c-as-a-java-programmer"><a class="header" href="#learning-c-as-a-java-programmer">Learning C as a Java Programmer</a></h2>
+<p>Unlike Java which is a <em>Object-Oriented language</em>, C is a <strong>procedural language</strong>. This means that C code specifies a series of well-structured steps and procedure instead of <em>encapsulating</em> functions and data into classes (or abstract data types). Consequently, the basic programming unit in C is a <strong>function</strong>.</p>
+<p>Additionally, as we have discussed before, compilation of C program requires a compiler (like gcc) which can translate the source code into machine language code. In contrast, Java code uses a compiler (javac) that translates source code into Java virtual machine language bytecode. </p>
+<pre><code class="language-sh"># Compiling a C program using gcc
+gcc source.c
+
+# Compiling a Java program using javac
+javac source.c
+</code></pre>
+<p>As such, Java programs require a bytecode interpreter whereas C programs can be loaded directly on the underlying hardware</p>
+<pre><code class="language-sh"># Execute a compiled C executable
+./a.out
+
+# Execute a compiled Java executable
+java prog
+</code></pre>
+<p>One of the more interesting feature of C is its capacity to directly access memory. In Java, memory management is done automatically with memory being allocated with the <code>new</code> keyword and the garbage collector automatically freeing memory when the object loses its reference. In C, however, memory allocation must be done manually using the <code>malloc()</code> function and freed using the <code>free()</code> function.</p>
+<p>Syntax wise, C supports the same single line comments (<code>//...</code>) and multi-line comments (<code>/* ... */</code>) just like in Java. Constants, on the other hand, can be defined using the <code>#define</code> macro or the <code>const</code> keyword. In comparison, Java uses the <code>final</code> keyword. The macros (defined using <code>#define</code>) are filled in using text-replacement by the <strong>preprocessor</strong> prior to compilation. In Java, there is no equivalent preprocessor.</p>
+<p>Furthermore, like in Java, variables need to be declared before being used. However, in older versions of C (mainly those before C99), variables need to be declared at the top of the file. In fact, it is still common practice to declare variable and function names at the top of the file. When declaring variables, the common convention is to use <code>snake_case</code>.<sup class="footnote-reference"><a href="#java-case">1</a></sup></p>
+<p>Lastly, to access an external library, we can use the <code>#include</code> preprocessor directive with the appropriate header file like:</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+</code></pre>
+<p>Header files are simply text files which contain the names of the functions in the external library. The angle brackets (<code>&lt; &gt;</code>) tell the preprocessor to look for the file in the location of the system's standard library. If instead, we were using a custom (non-standard) library, we would need to use quotation marks and explicitly state the path to the header file like:</p>
+<pre><code class="language-c">#include &quot;path/to/header.h&quot;
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th></th><th>C</th><th>Java</th></tr></thead><tbody>
+<tr><td>Language Type</td><td>Procedural</td><td>Object Oriented</td></tr>
+<tr><td>Programming Unit</td><td>Functions</td><td>Classes (Abstract Data Types)</td></tr>
+<tr><td>Compilation</td><td><code>gcc source.c</code> creates a machine language code</td><td><code>javac source.java</code> creates a Java virtual machine language bytecode</td></tr>
+<tr><td>Execution</td><td><code>./a.out</code> loads and executes the program</td><td><code>java prog</code> runs the JVM which interprets the bytecode</td></tr>
+<tr><td>Memory Management</td><td>Manual using <code>malloc()</code> and <code>free()</code></td><td>Automatic using the <code>new</code> keyword and the garbage collector</td></tr>
+<tr><td>Comments</td><td><code>// single line comments</code> and <code>/* multi-line comments */</code></td><td><code>// single line comments</code> and <code>/* multi-line comments */</code></td></tr>
+<tr><td>Variable Declaration</td><td>Before using it (additional restrictions with older versions of C)</td><td>Before using it</td></tr>
+<tr><td>Variable Naming Conventions</td><td><code>snake_case</code></td><td><code>camelCase</code></td></tr>
+<tr><td>Accessing a Library</td><td><code>#include &lt;stdio.h&gt;</code></td><td><code>import java.io.File;</code></td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../cprog/cprog.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../cprog/hello_world.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../cprog/cprog.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../cprog/hello_world.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
