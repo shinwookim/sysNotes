@@ -1,0 +1,61 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body_1" width="224" height="462">
+
+<g transform="matrix(0.24944322 0 0 0.25013536 0 0)">
+	<g transform="matrix(1 0 0 1 -2493 -233)">
+		<g>
+            <path d="M2503.5 1315.5L3383.5 1315.5L3383.5 1498.5L2503.5 1498.5z" stroke="#2F528F" stroke-width="4.58333" fill="#A9D18E" fill-rule="nonzero" />
+            <path d="M2503.5 675.5L3383.5 675.5L3383.5 840.5L2503.5 840.5z" stroke="#2F528F" stroke-width="4.58333" fill="#F4B183" fill-rule="nonzero" />
+            <g >
+                <path d="M2503.5 820.5L3383.5 820.5L3383.5 1315.5L2503.5 1315.5z" stroke="#FFFFFF" stroke-width="4.58333" fill="none" />
+					<g transform="matrix(1 0 0 1 0 0)">
+					</g>
+            </g>
+			<text transform="matrix(1 0 0 1 2555.27 1049)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="83">
+currently unused but
+			</text>
+			<text transform="matrix(1 0 0 1 2625.44 1148)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="83">
+available memory
+			</text>
+            <path d="M2503 675L3383 675L3383 1913L2503 1913z" stroke="#000000" stroke-width="13.75" fill="none" />
+            <path d="M2503 1686L3383 1686L3383 1913L2503 1913z" stroke="#000000" stroke-width="13.75" fill="#FFFF00" fill-rule="nonzero" />
+            <path d="M2503 1500L3383 1500L3383 1686L2503 1686z" stroke="#000000" stroke-width="13.75" fill="#00B0F0" fill-rule="nonzero" />
+            <path d="M2503 1315L3383 1315" stroke="#000000" stroke-width="13.75" stroke-dasharray="110,41.25" fill="none" />
+            <path d="M2503 818L3383 818" stroke="#000000" stroke-width="13.75" stroke-dasharray="110,41.25" fill="none" />
+			<text transform="matrix(1 0 0 1 2820.89 1836)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="110">
+code
+			</text>
+			<text transform="matrix(1 0 0 1 2700.22 1629)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="110">
+static data
+			</text>
+			<text transform="matrix(1 0 0 1 2831.7 1443)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="110">
+heap
+			</text>
+			<text transform="matrix(1 0 0 1 2824.26 801)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="110">
+stack
+			</text>
+            <path transform="matrix(1 0 -0 -1 2943.5 1315.5)"  d="M5.72917 -1.98809E-05L5.72943 75.3543L-5.72891 75.3544L-5.72917 1.98809E-05L5.72917 -1.98809E-05zM17.1877 69.6251L0.000360892 104L-17.1873 69.6252z" stroke="none" fill="#000000" fill-rule="nonzero" />
+            <path d="M2949.23 820.5L2949.23 894.854L2937.77 894.854L2937.77 820.5L2949.23 820.5zM2960.69 889.125L2943.5 923.5L2926.31 889.125z" stroke="none" fill="#000000" fill-rule="nonzero" />
+			<text transform="matrix(1 0 0 1 2674.21 630)" x="0" y="0" style="fill:#000000;font-family:Inconsolata;font-weight:bold;" font-size="83">
+~ 0xFFFFFFFF
+			</text>
+			<text transform="matrix(1 0 0 1 2685.31 2011)" x="0" y="0" style="fill:#000000;font-family:Inconsolata;font-weight:bold;" font-size="83">
+~ 0x00000000
+			</text>
+			<text transform="matrix(1 0 0 1 2651.52 344)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="83">
+Potential Layout
+			</text>
+			<text transform="matrix(1 0 0 1 2626.89 443)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="83">
+(32
+			</text>
+			<text transform="matrix(1 0 0 1 2744.91 443)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="83">
+-
+			</text>
+			<text transform="matrix(1 0 0 1 2775.27 443)" x="0" y="0" style="fill:#000000;font-family:Lato;" font-size="83">
+bit addresses)
+			</text>
+		</g>
+	</g>
+</g>
+</svg>

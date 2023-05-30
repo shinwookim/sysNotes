@@ -1,9 +1,8 @@
-
 # Integer Encoding
-We now that a computer stores information as a stream of bits (e.g., `0xe29884`), but what do those bits actually represent? For that, we need to assign an **interpretation** to the bit stream.
+A computer stores information as a stream of bits (e.g., `0xe29884`). But what do those bits actually mean? For that, we need to assign an **interpretation** to the bit stream.
 
 ## Unsigned Numbers
-One possible interpretation of a hex digit is as an unsigned number. This is the most simple interpretation of a bit stream, and we read the number as follows:
+One possible interpretation of a stream of bits is as an unsigned number. This is the most simple interpretation of a bit stream, and we read the number (represented in hexadecimal )as follows:
 
 \\[\begin{equation}
 \begin{split}
@@ -40,13 +39,13 @@ Another possible interpretation of a hex digit is as an signed number. One of th
 | `010`                 | 2     |
 | `011`                 | 3     |
 
-we can see that numbers with a 1 in the left-most bit is negative, whereas numbers with a 0 in the left-most bit are positive. We can also see that there is one additional negative number than the positives (-4 does not have a positive counterpart). Two's complement is achieved by:
-1. Star with the equivalent positive number.
-2. Invert (or flip) all bits – changing every 0 to 1, and every 1 to 0;
-3. Add 1 to the entire inverted number, ignoring any overflow
+we can see that numbers with a 1 in the left-most bit is negative, whereas numbers with a 0 in the left-most bit are positive. We can also see that there is one additional negative number than the positives. That is, \\(-4\\) does not have a positive counterpart. Two's complement is achieved by:
+1. Starting with the equivalent positive number.
+2. Inverting (or flip) all bits – changing every 0 to 1, and every 1 to 0;
+3. Adding 1 to the entire inverted number, ignoring any overflow
 
 For example, to write \\(-3 \\) using 4 bits:
-1. we first write the bit pattern for positive \\(3 \implies \verb|0b0010|\\).
+1. We first write the bit pattern for positive \\(3 \implies \verb|0b0010|\\).
 2. We then flips all the bits \\( \verb|0b0010| \implies \verb|0b1100|\\).
 3. Finally, we add 1 to get \\( \verb|0b1100| + 1 \implies \verb|0b1101|\\).
 

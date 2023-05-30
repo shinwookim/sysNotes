@@ -8,3 +8,11 @@ title = "Introduction to Systems Software"
 
 [output.html]
 mathjax-support = true
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
+
+[preprocessor]
+
+[preprocessor.curly-quotes]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
